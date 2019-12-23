@@ -1,0 +1,4 @@
+.jsbeautifyrc
+.project
+build/
+node_modules/
