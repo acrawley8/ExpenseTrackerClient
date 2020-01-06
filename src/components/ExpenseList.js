@@ -140,10 +140,10 @@ class ExpenseList extends Component {
                     <h5 className="red-text center">{ Moment(new Date("" + this.state.month + "/01/" + this.state.year)).format('MMMM') }, { this.state.year }</h5>
                 </div>
                 { this.state.loading ? <div className="progress"><div className="indeterminate"></div></div> : null }
-                <div className={ this.state.loading ? 'hide' : ''}>                    
-					<ExpenseTotals month={ this.state.month } year={ this.state.year } />					
-					<div className="row">
-						<div className="input-field col s2 l3">
+                <div className={ this.state.loading ? 'hide' : ''}>     
+					<div class="row">
+						<ExpenseTotals month={ this.state.month } year={ this.state.year } />					
+						<div className="input-field col s6 m4 l3">
 							<select style={{ display: 'block' }} value={ this.state.sort } ref={ this.sortSelect } onChange={ this.sort }>
 								<option value="date asc">Date (oldest first)</option>
 								<option value="date desc">Date (newest first)</option>

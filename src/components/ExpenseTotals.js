@@ -12,24 +12,22 @@ class Totals extends Component {
     }
     render() {
         return (
-            <div className="row">
-                <div className="card col s12">
-                    <div className="card-content">
-                        <div>
-                            <div style={{ display: 'inline-block', width: '120px' }}>Total:</div>
-                            <div style={{ textAlign: 'right', width: '60px', display: 'inline-block' }}>
-                                { new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'}).format(this.props.totals.total) }
-                            </div>                             
-                        </div>
-                        <div>
-                            <div style={{ display: 'inline-block', width: '120px' }}>Remaining:</div>
-                            <div style={{ textAlign: 'right', width: '60px', display: 'inline-block' }}>
-                                { new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'}).format(this.props.totals.remaining) }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+			<div className="card col s12 m6 l6">
+				<div className="card-content">
+					<div>
+						<div style={{ display: 'inline-block', width: '120px' }}>Total:</div>
+						<div style={{ textAlign: 'right', width: '60px', display: 'inline-block' }}>
+							{ new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'}).format(this.props.totals.total) }
+						</div>                             
+					</div>
+					<div>
+						<div style={{ display: 'inline-block', width: '120px' }}>Remaining:</div>
+						<div style={{ textAlign: 'right', width: '60px', display: 'inline-block' }}>
+							{ new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD'}).format(this.props.totals.remaining) }
+						</div>
+					</div>
+				</div>
+			</div>
         );
     }
 }
