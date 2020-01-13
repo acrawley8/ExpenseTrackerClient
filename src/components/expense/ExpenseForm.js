@@ -35,7 +35,7 @@ class ExpenseForm extends Component {
     renderFields = () => {
         return (
             <div>
-                <Field key="value" name="value" label="Amount" component={renderTextField} />
+                <Field key="value" name="value" label="Amount" type="number" component={renderTextField} />
                 <Field key="type" name="type" label="Type" component={TypeList} onDialogOpen={ this.onDialogOpen } />
                 <Field key="date" name="date" label="Date" component={renderDatePickerField} />
                 <Field key="description" name="description" label="Description" component={renderTextField} />
@@ -63,11 +63,11 @@ class ExpenseForm extends Component {
     }
 }
 
-const renderTextField = ({ input, label, meta: { touched, error }}) => {
+const renderTextField = ({ input, label, type = "text", meta: { touched, error }}) => {
     return (
         <div>
             <label>{ label }</label>
-            <input {...input} type="text" autoComplete="off" />
+            <input {...input} type={ type } autoComplete="off" />
             { touched && error && <span className="red-text">{ error }</span> }
         </div>
     );
@@ -80,10 +80,10 @@ const renderDatePickerField = ({ input, meta: { touched, error }}) => {
                 {...input}
                 selected={ input.value ? new Date(Date.parse(input.value)) : new Date() }
                 value={ input.value ? formatDateValue(input.value) : formatDateValue(new Date()) }
-                placeholderText="Select a date" 
+                placeholderText="Select a date"
                 dateFormat="MM-dd-YYYY"
                 autoComplete="off"
-            />            
+            />
             { touched && error && <div><span className="red-text">{ error }</span></div> }
         </div>
     );
