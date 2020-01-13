@@ -14,7 +14,7 @@ class ExpenseList extends Component {
             month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
 			sort: 'date asc',
-            loading: false			
+            loading: false
         };
     }
 
@@ -22,7 +22,7 @@ class ExpenseList extends Component {
         this.props.fetchExpenses(this.state.month, this.state.year, this.state.sort);
     }
 
-    formatDate = (date) => {        
+    formatDate = (date) => {
         const parsedDate = new Date(Date.parse(date));
         return parsedDate.toDateString();
     }
@@ -66,7 +66,7 @@ class ExpenseList extends Component {
         });
         this.refresh(true);
     }
-	
+
 	/**
 	  * Responds to sort selection events by the user. Causes the expense
 	  * list to be refreshed.
@@ -81,11 +81,11 @@ class ExpenseList extends Component {
 		this.refresh(false);
 	}
 
-	/* 
+	/*
 	 * Causes this component to refresh its data from the server (expense list and totals).
 	 *
-     * @param refreshTotals - Whether or not to refresh the totals area	
-	 * 
+     * @param refreshTotals - Whether or not to refresh the totals area
+	 *
 	 */
     refresh = async (refreshTotals) => {
 		if(refreshTotals) {
@@ -102,7 +102,7 @@ class ExpenseList extends Component {
     renderExpenses = () => {
 		if(this.props.expense.expenses) {
 			return this.props.expense.expenses.map((expense) => {
-				return ( 
+				return (
 					<div className="card col s6 m4 l2" key={ expense._id }>
 						<div className="card-content">
 							<span className="card-title">{ expense.type }</span>
@@ -140,19 +140,19 @@ class ExpenseList extends Component {
                     <h5 className="red-text center">{ Moment(new Date("" + this.state.month + "/01/" + this.state.year)).format('MMMM') }, { this.state.year }</h5>
                 </div>
                 { this.state.loading ? <div className="progress"><div className="indeterminate"></div></div> : null }
-                <div className={ this.state.loading ? 'hide' : ''}>     
-					<div class="row">
-						<ExpenseTotals month={ this.state.month } year={ this.state.year } />					
+                <div className={ this.state.loading ? 'hide' : ''}>
+					<div className="row">
+						<ExpenseTotals month={ this.state.month } year={ this.state.year } />
 						<div className="input-field col s6 m4 l3">
 							<select style={{ display: 'block' }} value={ this.state.sort } ref={ this.sortSelect } onChange={ this.sort }>
 								<option value="date asc">Date (oldest first)</option>
 								<option value="date desc">Date (newest first)</option>
 								<option value="value asc">Value (low to high)</option>
-								<option value="value desc">Value (high to low)</option>							
+								<option value="value desc">Value (high to low)</option>
 							</select>
 						</div>
 					</div>
-                    <div className="row">			
+                    <div className="row">
                         { this.renderExpenses() }
                         <div className="fixed-action-btn">
                             <Link to="/expense/new" className="btn-floating btn-large red right">
