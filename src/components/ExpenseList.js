@@ -13,7 +13,7 @@ class ExpenseList extends Component {
         this.state = {
             month: new Date().getMonth() + 1,
             year: new Date().getFullYear(),
-			sort: 'date asc',
+			sort: 'date desc',
             loading: false
         };
     }
