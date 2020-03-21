@@ -1,9 +1,9 @@
 import axios from 'axios';
-import { FETCH_EXPENSES, FETCH_TOTALS, FETCH_TYPES } from './types';
+import { FETCH_EXPENSES, FETCH_TOTALS, FETCH_TYPES, FETCH_AGGREGATE } from './types';
 
 export const fetchExpenses = (month, year, sort) => async (dispatch) => {
     const expenseList = await axios.get('/api/expense/' + month + '/' + year, { params: { sortBy: sort }});
-	
+
     dispatch({
         type: FETCH_EXPENSES,
         payload: expenseList.data
@@ -25,6 +25,15 @@ export const fetchTotals = (month, year) => async (dispatch) => {
         type: FETCH_TOTALS,
         payload: expenseTotals.data
     });
+};
+
+export const fetchAggregate = (month, year) => async(dispatch) => {
+  const expenseAggregate = await axios.get('/api/expense/aggregate/' + month + '/' + year);
+
+  dispatch({
+    type: FETCH_AGGREGATE,
+    payload: expenseAggregate.data
+  });
 };
 
 export const fetchTypes = () => async (dispatch) => {

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchExpenses, fetchTotals, deleteExpense } from '../actions';
+import { fetchExpenses, fetchTotals, fetchAggregate, deleteExpense } from '../actions';
 import { Link } from 'react-router-dom';
 import Moment from 'moment';
 import ExpenseTotals from './ExpenseTotals';
+import ExpenseAggregate from './ExpenseAggregate';
 
 class ExpenseList extends Component {
     constructor() {
@@ -84,14 +85,15 @@ class ExpenseList extends Component {
 	/*
 	 * Causes this component to refresh its data from the server (expense list and totals).
 	 *
-     * @param refreshTotals - Whether or not to refresh the totals area
+     * @param refreshTotals - Whether or not to refresh the totals and aggregate areas
 	 *
 	 */
     refresh = async (refreshTotals) => {
 		if(refreshTotals) {
 			await Promise.all([
 				this.props.fetchExpenses(this.state.month, this.state.year, this.state.sort),
-				this.props.fetchTotals(this.state.month, this.state.year)
+				this.props.fetchTotals(this.state.month, this.state.year),
+        this.props.fetchAggregate(this.state.month, this.state.year)
 			]);
 		} else {
 			this.props.fetchExpenses(this.state.month, this.state.year, this.state.sort);
@@ -141,27 +143,32 @@ class ExpenseList extends Component {
                 </div>
                 { this.state.loading ? <div className="progress"><div className="indeterminate"></div></div> : null }
                 <div className={ this.state.loading ? 'hide' : ''}>
-					<div className="row">
-						<ExpenseTotals month={ this.state.month } year={ this.state.year } />
-						<div className="input-field col s6 m4 l3">
-							<select style={{ display: 'block' }} value={ this.state.sort } ref={ this.sortSelect } onChange={ this.sort }>
-								<option value="date asc">Date (oldest first)</option>
-								<option value="date desc">Date (newest first)</option>
-								<option value="value asc">Value (low to high)</option>
-								<option value="value desc">Value (high to low)</option>
-							</select>
-						</div>
-					</div>
-                    <div className="row">
-                        { this.renderExpenses() }
-                        <div className="fixed-action-btn">
-                            <Link to="/expense/new" className="btn-floating btn-large red right">
-                                <i className="material-icons">add</i>
-                            </Link>
-                        </div>
+        					<div className="row">
+        						<ExpenseTotals month={ this.state.month } year={ this.state.year } />
+        						<div className="input-field col s6 m4 l3">
+        							<select style={{ display: 'block' }} value={ this.state.sort } ref={ this.sortSelect } onChange={ this.sort }>
+        								<option value="date asc">Date (oldest first)</option>
+        								<option value="date desc">Date (newest first)</option>
+        								<option value="value asc">Value (low to high)</option>
+        								<option value="value desc">Value (high to low)</option>
+        							</select>
+        						</div>
+        					</div>
+
+                  <div className="row">
+                    <ExpenseAggregate month={ this.state.month } year={ this.state.year } />
+                  </div>
+
+                  <div className="row">
+                    { this.renderExpenses() }
+                    <div className="fixed-action-btn">
+                      <Link to="/expense/new" className="btn-floating btn-large red right">
+                        <i className="material-icons">add</i>
+                      </Link>
                     </div>
+                  </div>
                 </div>
-            </div>
+              </div>
         );
     }
 }
@@ -170,4 +177,4 @@ function mapStateToProps({ expense }) {
     return { expense };
 }
 
-export default connect(mapStateToProps, { fetchExpenses, fetchTotals, deleteExpense })(ExpenseList);
+export default connect(mapStateToProps, { fetchExpenses, fetchTotals, fetchAggregate, deleteExpense })(ExpenseList);
